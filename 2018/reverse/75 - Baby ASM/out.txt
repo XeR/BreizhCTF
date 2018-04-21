@@ -1,0 +1,45 @@
+
+a.out:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+000000000000064a <checkFlag>:
+ 64a:	55                   	push   rbp
+ 64b:	48 89 e5             	mov    rbp,rsp
+ 64e:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+ 652:	48 c7 45 f8 00 00 00 00 	mov    QWORD PTR [rbp-0x8],0x0
+ 65a:	eb 38                	jmp    694 <checkFlag+0x4a>
+ 65c:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
+ 660:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+ 664:	48 01 d0             	add    rax,rdx
+ 667:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 66a:	0f be c0             	movsx  eax,al
+ 66d:	48 8d 0d bc 09 20 00 	lea    rcx,[rip+0x2009bc]        # 201030 <flag>
+ 674:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+ 678:	48 01 ca             	add    rdx,rcx
+ 67b:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
+ 67e:	0f be d2             	movsx  edx,dl
+ 681:	83 c2 2a             	add    edx,0x2a
+ 684:	39 d0                	cmp    eax,edx
+ 686:	74 07                	je     68f <checkFlag+0x45>
+ 688:	b8 00 00 00 00       	mov    eax,0x0
+ 68d:	eb 11                	jmp    6a0 <checkFlag+0x56>
+ 68f:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+ 694:	48 83 7d f8 1a       	cmp    QWORD PTR [rbp-0x8],0x1a
+ 699:	76 c1                	jbe    65c <checkFlag+0x12>
+ 69b:	b8 01 00 00 00       	mov    eax,0x1
+ 6a0:	5d                   	pop    rbp
+ 6a1:	c3                   	ret    
+
+Disassembly of section .data:
+
+0000000000201030 <flag>:
+  201030:	38 50 3e             	cmp    BYTE PTR [rax+0x3e],dl
+  201033:	39 4a 3c             	cmp    DWORD PTR [rdx+0x3c],ecx
+  201036:	51                   	push   rcx
+  201037:	29 4a 37             	sub    DWORD PTR [rdx+0x37],ecx
+  20103a:	4a 3f                	rex.WX (bad) 
+  20103c:	39 35 37 44 37 42    	cmp    DWORD PTR [rip+0x42374437],esi        # 42575479 <__TMC_END__+0x42374429>
+  201042:	4f                   	rex.WRXB
+  201043:	49 3f                	rex.WB (bad) 
+  201045:	49 35 1c 2a 2d 53    	rex.WB xor rax,0x532d2a1c
