@@ -26,4 +26,4 @@ int main(int argc, char *argv[])
 		puts("ok");
 	else
 		puts("ko");
-
+}
