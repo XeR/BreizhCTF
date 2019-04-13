@@ -1,0 +1,146 @@
+# Memory contains full UDP packet
+#  0      7 8     15 16    23 24    31
+# +--------+--------+--------+--------+
+# |     Source      |   Destination   |
+# |      Port       |      Port       |
+# +--------+--------+--------+--------+
+# |                 |                 |
+# |     Length      |    Checksum     |
+# +--------+--------+--------+--------+
+# |
+# |          data octets ...
+# +---------------- ...
+
+
+# UDP header
+# 0000   xx xx 0c 8d 00 2e fe 41
+
+#       0 1         2         3         4     
+#       89012345678901234567890123456789012345
+# Flag: BZHCTF{My_CRaCKMeS_RuN_iN_youR_KeRNeL}
+
+# outer (BZHCTF{...}) {{{
+# BZHC
+ld [8]
+jneq #0x425A4843, fail
+
+# TF{? + ???}
+ld [12]
+and #0xFFFFFF00
+tax
+
+ldb [45]
+or x
+jneq #0x54467B7D, fail
+# }}}
+
+# UDP headers (dest port and length) {{{
+# X = [length] << 10
+ldh [4]
+lsh #10
+tax
+
+# A = [dest port] ^ X (should be == 0xB48D)
+ldh [2]
+xor X
+
+tax
+# }}}
+
+# Main course {{{
+# My (4D79)
+ldh [15]
+xor x
+jne #0xF9F4, fail
+tax
+
+# _C (5F43)
+ldh [17]
+xor x
+jne #0xA6B7, fail
+tax
+
+# Ra (5261)
+ldh [19]
+xor x
+jne #0xF4D6, fail
+tax
+
+# CK (434B)
+ldh [21]
+xor x
+jne #0xB79D, fail
+tax
+
+# Me (4D65)
+ldh [23]
+xor x
+jne #0xFAF8, fail
+tax
+
+# S_ (535F)
+ldh [25]
+xor x
+jne #0xA9A7, fail
+tax
+
+# Ru (5275)
+ldh [27]
+xor x
+jne #0xFBD2, fail
+tax
+
+# N_ (4E5F)
+ldh [29]
+xor x
+jne #0xB58D, fail
+tax
+
+# iN (694E)
+ldh [31]
+xor x
+jne #0xDCC3, fail
+tax
+
+# _y (5F79)
+ldh [33]
+xor x
+jne #0x83BA, fail
+tax
+
+# ou (6F75)
+ldh [35]
+xor x
+jne #0xECCF, fail
+tax
+
+# R_ (525F)
+ldh [37]
+xor x
+jne #0xBE90, fail
+tax
+
+# Ke (4B65)
+ldh [39]
+xor x
+jne #0xF5F5, fail
+tax
+
+# RN (524E)
+ldh [41]
+xor x
+jne #0xA7BB, fail
+tax
+
+# eL (654C)
+ldh [43]
+xor x
+jne #0xC2F7, fail
+
+# }}}
+
+# Return length of flag + sizeof(udphdr) (0x26 + 8)
+ret #0x2e
+
+fail:
+ret #0
